@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+
+<h1>Edit Your Profile</h1>
+
+<form action="/edit-profile" method="POST" enctype="multipart/form-data">
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" value="<%= employee.firstName %>" required>
+    <br>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" value="<%= employee.lastName %>" required>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="<%= employee.email %>" required>
+    <br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" value="<%= employee.phone %>" required>
+    <br>
+
+    <label for="position">Position:</label>
+    <input type="text" name="position" value="<%= employee.position %>" required>
+    <br>
+
+    <label for="department">Department:</label>
+    <input type="text" name="department" value="<%= employee.department %>" required>
+    <br>
+
+    <label for="salary">Salary:</label>
+    <input type="number" name="salary" value="<%= employee.salary %>" required>
+    <br>
+
+    <label for="profilePic">Profile Picture:</label>
+    <input type="file" name="profilePic">
+    <br>
+
+    <button type="submit">Update Profile</button>
+</form>
+
+</body>
+</html>

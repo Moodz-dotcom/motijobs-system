@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Job Applications - HR Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #34495e;
+            position: fixed;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 20px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .applications-table th, .applications-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .applications-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .applications-table td {
+            background-color: #f4f4f4;
+        }
+
+        .btn-approve, .btn-reject {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+
+        .btn-approve:hover, .btn-reject:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+<Body background="@1.jpg">
+    <div class="navbar">
+    <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+
+        <h2>View Job Applications</h2>
+    </div>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="newMan.html">🏠 Dashboard</a></li>
+            <li><a href="jobapp.html">📄 View Job Applications</a></li>
+            <li><a href="EmpRec.html">👥 Employee Records</a></li>
+            <li><a href="payroll.html">💰 Manage Payroll</a></li>
+            <li><a href="Preview.html">📊 Performance Reviews</a></li>
+            <li><a href="HUMAN R.html">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h3>Job Applications</h3>
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>Applicant Name</th>
+                    <th>Position Applied</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Resume</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Software Developer</td>
+                    <td>johndoe@example.com</td>
+                    <td>+123456789</td>
+                    <td><a href="resume-john.pdf" target="_blank">View Resume</a></td>
+                    <td>Pending</td>
+                    <td>
+                        <button class="btn-approve">Approve</button>
+                        <button class="btn-reject">Reject</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>HR Manager</td>
+                    <td>janesmith@example.com</td>
+                    <td>+987654321</td>
+                    <td><a href="resume-jane.pdf" target="_blank">View Resume</a></td>
+                    <td>Pending</td>
+                    <td>
+                        <button class="btn-approve">Approve</button>
+                        <button class="btn-reject">Reject</button>
+                    </td>
+                </tr>
+                <!-- More applicants can be listed here -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

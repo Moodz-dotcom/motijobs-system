@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Employee Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .task-list {
+            margin-bottom: 20px;
+        }
+        .task-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .task-list th, .task-list td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .task-list th {
+            background-color: #f2f2f2;
+        }
+        .task-list td {
+            text-align: center;
+        }
+        .update-status-btn {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .update-status-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Tasks - Employee Dashboard</h2>
+
+        <!-- Task List Section -->
+        <div class="task-list">
+            <h3>Assigned Tasks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Task records will be dynamically inserted here -->
+                    <tr>
+                        <td>Project Report</td>
+                        <td>Prepare the final project report for the client.</td>
+                        <td>2025-03-30</td>
+                        <td>In Progress</td>
+                        <td><button class="update-status-btn" onclick="updateStatus(1)">Mark as Completed</button></td>
+                    </tr>
+                    <tr>
+                        <td>Client Meeting</td>
+                        <td>Prepare materials for client meeting on March 28.</td>
+                        <td>2025-03-28</td>
+                        <td>Pending</td>
+                        <td><button class="update-status-btn" onclick="updateStatus(2)">Mark as In Progress</button></td>
+                    </tr>
+                    <!-- More rows can be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(taskId) {
+            // Logic to update the task status (this could involve an API call or form submission)
+            alert('Task status updated for Task ID: ' + taskId);
+        }
+    </script>
+</body>
+</html>

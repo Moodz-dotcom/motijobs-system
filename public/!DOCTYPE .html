@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotiJobs HR Management System</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      z-index: 999;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background-color: #444;
+    }
+    .navbar a:hover {
+      background-color: #777;
+    }
+    .section {
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    form, input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    input, select {
+      width: 250px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    ul#jobList {
+      margin-top: 20px;
+      list-style: none;
+      padding: 0;
+    }
+    ul#jobList li {
+      background: rgba(0, 0, 0, 0.5);
+      margin: 10px auto;
+      padding: 10px;
+      width: 60%;
+      border-radius: 5px;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  position: relative;
+  color: #333;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: red;
+}  
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#search-jobs">Search Jobs</a>
+    <a href="#about-us">About Us</a>
+    <a href="#contact-us">Contact Us</a>
+  </div>
+
+  <!-- Home Section -->
+  <div id="home" class="section" style="background-image: url('jo.png');">
+  <h2>Welcome to MotiJobs HR Management System</h2>
+  <p>Your central hub for employee and job management.</p>
+  <img src="/mnt/data/A_digital_photograph_on_the_homepage_of_the_MotiJo.png" alt="Person working on a laptop" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 20px;">
+</div>
+
+
+  <!-- Login Section -->
+  <div id="login" class="section" style="background-image: url('@2.jpg');">
+    <h2>Login Portal</h2>
+    <form>
+      <select required>
+        <option value="">Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="manager">HR Manager</option>
+        <option value="employee">Employee</option>
+        <option value="guest">Guest</option>
+      </select><br>
+      <input type="text" placeholder="Username" required><br>
+      <input type="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Job Search Section for Guests -->
+  <div id="search-jobs" class="section" style="background-image: url('@3.jpg');">
+    <h2>Search Jobs</h2>
+    <input type="text" id="searchBox" placeholder="Search for jobs..." onkeyup="filterJobs()">
+    <ul id="jobList">
+      <li onclick="showDetails('software')">Software Engineer - IT Department</li>
+      <li onclick="showDetails('hr')">HR Assistant - HR Department</li>
+      <li onclick="showDetails('marketing')">Marketing Intern - Marketing</li>
+      <li onclick="showDetails('finance')">Finance Analyst - Finance</li>
+      <li onclick="showDetails('support')">Customer Support - Operations</li>
+      <li onclick="showDetails('designer')">UI/UX Designer - Product Team</li>
+      <li onclick="showDetails('network')">Network Administrator - IT Infrastructure</li>
+      <li onclick="showDetails('analyst')">Data Analyst - Business Intelligence</li>
+    </ul>
+  </div>
+
+  <!-- About Us Section -->
+  <div id="about-us" class="section" style="background-image: url('@3.jpg');">
+    <h2>About Us</h2>
+    <p>At <strong>MotiJobs</strong>, we believe that managing human resources should be seamless, efficient, and empowering. Our HR Management System is designed to help businesses streamline HR operations, improve employee engagement, and enhance workplace productivity.</p>
+    <h3>Our Mission</h3>
+    <p>Our mission is to revolutionize HR management by providing an intuitive, secure, and scalable platform that enables businesses to focus on their most valuable asset – their people.</p>
+  </div>
+
+    <!-- Contact Us Section -->
+<div id="contact-us" class="section" style="background-image: url('@2.jpg');">
+  <h2>Contact Us</h2>
+  <p>If you have any questions or need further assistance, feel free to reach out to us!</p>
+  
+  <p><strong>Email:</strong> support@motijobs.com</p>
+  <p><strong>Phone:</strong> +256 708-904-469</p>
+  <p><strong>Address:</strong> 123 MotiJobs Lane, City, Country</p>
+
+  <!-- WhatsApp Contact Button -->
+  <a href="https://wa.me/1234567890?text=Hello,%20I%20need%20assistance%20with%20the%20HR%20system."
+    target="_blank" 
+    style="display: inline-block; padding: 10px 20px; background-color: #25D366; color: white; border-radius: 5px; text-decoration: none;">
+    Contact Us via WhatsApp
+  </a>
+  
+</div>
+
+  <!-- Modal Popup -->
+  <div id="jobModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+<script>
+  function filterJobs() {
+    const input = document.getElementById('searchBox').value.toLowerCase();
+    const jobs = document.getElementById('jobList').getElementsByTagName('li');
+    for (let i = 0; i < jobs.length; i++) {
+      const job = jobs[i];
+      if (job.textContent.toLowerCase().includes(input)) {
+        job.style.display = "";
+      } else {
+        job.style.display = "none";
+      }
+    }
+  }
+
+  function showDetails(jobId) {
+    const titles = {
+      software: "Software Engineer",
+      hr: "HR Assistant",
+      marketing: "Marketing Intern",
+      finance: "Finance Analyst",
+      support: "Customer Support",
+      designer: "UI/UX Designer",
+      network: "Network Administrator",
+      analyst: "Data Analyst"
+    };
+
+    const descriptions = {
+      software: `As a Software Engineer, you will be responsible for designing, developing, and maintaining scalable applications and systems. You’ll collaborate with cross-functional teams, write clean code, and contribute to software architecture decisions. Requirements: knowledge of Java, Python, or JavaScript, and strong debugging skills.`,
+      
+      hr: `Assist in recruitment, employee onboarding, and maintaining personnel records. Coordinate HR events and support the HR manager in implementing HR policies. Communication and organizational skills are essential.`,
+      
+      marketing: `Support marketing strategies, create social media content, and assist in campaign execution. This role suits creative individuals with a basic understanding of SEO, branding, and digital trends.`,
+      
+      finance: `Analyze financial data, create reports, and support budgeting processes. Collaborate with departments to ensure financial accuracy. Requires proficiency in Excel and financial modeling tools.`,
+      
+      support: `Provide excellent customer service by handling client queries via phone, chat, or email. Resolve issues efficiently and maintain customer satisfaction. Training provided.`,
+      
+      designer: `Design and enhance user interfaces for websites and apps. Collaborate with developers and product teams to ensure user-friendly designs. Must know Figma, Adobe XD, or similar tools.`,
+      
+      network: `Monitor and maintain IT networks, install hardware/software, and ensure security protocols are followed. Requires networking certifications (e.g., CompTIA, Cisco).`,
+      
+      analyst: `Collect and analyze data to produce actionable insights for business growth. Build dashboards and data visualizations. Skills in SQL, Python, or Excel are a plus.`
+    };
+
+    document.getElementById('modalTitle').innerText = titles[jobId];
+    document.getElementById('modalDesc').innerText = descriptions[jobId];
+    document.getElementById('jobModal').style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('jobModal').style.display = "none";
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Records - HR Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #34495e;
+            position: fixed;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 20px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .employee-table th, .employee-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .employee-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .employee-table td {
+            background-color: #f4f4f4;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            opacity: 0.8;
+        }
+
+        .add-employee-btn {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .add-employee-btn:hover {
+            opacity: 0.8;
+        }
+
+        .add-employee-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .add-employee-form input, .add-employee-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-employee-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .add-employee-form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<Body background="@1.jpg">
+    <div class="navbar">
+    <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+
+        <h2>Employee Records</h2>
+    </div>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="newMan.html">🏠 Dashboard</a></li>
+            <li><a href="jobapp.html">📄 View Job Applications</a></li>
+            <li><a href="EmpRec.html">👥 Employee Records</a></li>
+            <li><a href="payroll.html">💰 Manage Payroll</a></li>
+            <li><a href="Preview.html">📊 Performance Reviews</a></li>
+            <li><a href="HUMAN R.html">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h3>All Employee Records</h3>
+
+        <!-- Button to open Add Employee form -->
+        <button class="add-employee-btn" onclick="toggleEmployeeForm()">➕ Add Employee</button>
+
+        <!-- Add Employee Form -->
+        <div class="add-employee-form" id="employeeForm" style="display: none;">
+            <h4>Add New Employee</h4>
+            <form id="addEmployeeForm">
+                <input type="text" id="employeeName" placeholder="Employee Name" required>
+                <input type="text" id="employeePosition" placeholder="Position" required>
+                <input type="text" id="employeeDepartment" placeholder="Department" required>
+                <input type="email" id="employeeEmail" placeholder="Email" required>
+                <input type="tel" id="employeePhone" placeholder="Phone Number" required>
+                <button type="submit">Add Employee</button>
+            </form>
+        </div>
+
+        <!-- Employee Table -->
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="employeeList">
+                <!-- Employees will be listed here -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>Software Developer</td>
+                    <td>Engineering</td>
+                    <td>johndoe@example.com</td>
+                    <td>+123456789</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>HR Manager</td>
+                    <td>Human Resources</td>
+                    <td>janesmith@example.com</td>
+                    <td>+987654321</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                <!-- More employees can be listed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Toggle the visibility of the Add Employee form
+        function toggleEmployeeForm() {
+            const form = document.getElementById('employeeForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Handle form submission for adding a new employee
+        document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get employee data from form
+            const name = document.getElementById('employeeName').value;
+            const position = document.getElementById('employeePosition').value;
+            const department = document.getElementById('employeeDepartment').value;
+            const email = document.getElementById('employeeEmail').value;
+            const phone = document.getElementById('employeePhone').value;
+
+            // Add new employee to the table (you would typically add this to a database)
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${position}</td>
+                <td>${department}</td>
+                <td>${email}</td>
+                <td>${phone}</td>
+                <td>
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-delete">Delete</button>
+                </td>
+            `;
+            document.getElementById('employeeList').appendChild(newRow);
+
+            // Clear form fields
+            document.getElementById('addEmployeeForm').reset();
+
+            // Hide the form
+            toggleEmployeeForm();
+        });
+    </script>
+</body>
+</html>

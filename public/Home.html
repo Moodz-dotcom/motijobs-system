@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .dashboard {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+        }
+        .card a {
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+        .logout {
+            margin-top: 20px;
+            padding: 10px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<Body background="@H1.jpg">
+    <div class="navbar">
+  <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+        <h1>HR Admin dashboard</h1>
+    </div>
+    <div class="container">
+        <h2>Welcome, <span id="username">User</span>!</h2>
+        <div class="dashboard">
+            <div class="card">
+                <h3>ROLES</h3>
+                <a href="aRole.html">ROLES ASSIGNMENT</a>
+            </div>
+            <div class="card">
+                <h3>JOBS</h3>
+                <a href="postJobs.html">POST JOBS</a>
+            </div>
+            <div class="card">
+                <h3>PRIVILAGES</h3>
+                <a href="privilages.html">PRIVILAGE ASSIGNMENT</a>
+            </div>
+                    </div>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        document.getElementById("username").innerText = localStorage.getItem("loggedInUser") || "Admin";
+        
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("Logged out successfully");
+            window.location.href = "Roll.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Performance Reviews - Employee Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 80%;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .performance-reviews table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .performance-reviews th, .performance-reviews td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    .performance-reviews th {
+      background-color: #f2f2f2;
+    }
+    .performance-reviews td {
+      text-align: center;
+    }
+    .review-feedback, .goals {
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+    }
+    .review-feedback {
+      background-color: #f9f9f9;
+      color: #555;
+    }
+    .goals {
+      background-color: #e6f7e6;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Performance Reviews - <%= employee.firstName %> <%= employee.lastName %></h2>
+
+    <div class="performance-reviews">
+      <h3>Performance Reviews</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Review Date</th>
+            <th>Performance Rating</th>
+            <th>Feedback</th>
+            <th>Goals for Next Period</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (reviews.length > 0) { %>
+            <% reviews.forEach(review => { %>
+              <tr>
+                <td><%= new Date(review.reviewDate).toLocaleDateString() %></td>
+                <td><%= review.performanceRating %></td>
+                <td><div class="review-feedback"><%= review.feedback %></div></td>
+                <td><div class="goals"><%= review.goals %></div></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="4">No performance reviews available.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #007bff;
+            color: white;
+            height: 100vh;
+            padding-top: 30px;
+            position: fixed;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li:hover {
+            background-color: #0056b3;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            display: block;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            width: calc(100% - 250px);
+        }
+        .hidden { display: none; }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .profile-info p, .payroll-info p, .attendance-info p, .performance-info p {
+            font-size: 18px;
+        }
+        .profile-info img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Employee Dashboard</h2>
+        <ul>
+            <li><a href="javascript:void(0)" onclick="showSection('profile-section')">My Profile</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('attendance-section')">Attendance</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('payroll-section')">View Payroll</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('performance-section')">Employee Performance</a></li>
+            <li><a href="/edit-profile">Edit Profile</a></li>
+            <!-- Logout button -->
+            <li><a href="/logout" class="btn btn-danger">Logout</a></li>
+
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- Profile Section -->
+        <div id="profile-section">
+            <h2 class="section-title">My Profile</h2>
+            <div class="profile-info">
+                <img src="<%= employee.profilePic || '/uploads/default-profile.png' %>" alt="Profile Picture">
+                <p><strong>Name:</strong> <%= employee.firstName %> <%= employee.lastName %></p>
+                <p><strong>Email:</strong> <%= employee.email %></p>
+                <p><strong>Phone:</strong> <%= employee.phone %></p>
+                <p><strong>Position:</strong> <%= employee.position %></p>
+                <p><strong>Department:</strong> <%= employee.department %></p>
+                <p><strong>Date Joined:</strong> <%= employee.dateOfJoining %></p>
+                <p><strong>Salary:</strong> $<%= employee.salary %></p>
+            </div>
+        </div>
+
+        <!-- Attendance Section -->
+        <div id="attendance-section" class="hidden">
+            <h2 class="section-title">Attendance</h2>
+            <div class="attendance-info">
+                <p><strong>January 2025:</strong> 22/22</p>
+                <p><strong>February 2025:</strong> 20/22</p>
+                <p><strong>March 2025:</strong> 21/22</p>
+            </div>
+        </div>
+
+        <!-- Payroll Section -->
+        <div id="payroll-section" class="hidden">
+            <h2 class="section-title">View Payroll</h2>
+            <div class="payroll-info">
+                <p><strong>Salary for March 2025:</strong> $<%= employee.salary %></p>
+                <p><strong>Bonus:</strong> $1000</p>
+                <p><strong>Total Pay:</strong> $<%= parseInt(employee.salary) + 1000 %></p>
+            </div>
+        </div>
+
+        <!-- Performance Section -->
+        <div id="performance-section" class="hidden">
+            <h2 class="section-title">Employee Performance</h2>
+            <div class="performance-info">
+                <p><strong>Overall Rating for March 2025:</strong> 4.5/5</p>
+                <p><strong>Key Strengths:</strong> Problem-solving, teamwork</p>
+                <p><strong>Areas for Improvement:</strong> Time management</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.main-content > div').forEach(div => {
+                div.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>

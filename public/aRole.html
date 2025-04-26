@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Roles - HR Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #34495e;
+            position: fixed;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 20px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .role-assignment-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .role-assignment-form input, .role-assignment-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .role-assignment-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .role-assignment-form button:hover {
+            background-color: #2980b9;
+        }
+
+        .role-list {
+            margin-top: 20px;
+        }
+
+        .role-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .role-list th, .role-list td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .role-list th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .role-list td {
+            background-color: #f4f4f4;
+        }
+
+        .btn-remove {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+<Body background="@2.jpg">
+    <div class="navbar">
+     <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+
+        <h2>Assign Roles to Employees</h2>
+    </div>
+    <div class="main">
+        <h3>Assign Roles</h3>
+
+        <!-- Role Assignment Form -->
+        <div class="role-assignment-form">
+            <h4>Assign Role to Employee</h4>
+            <form id="assignRoleForm">
+                <input type="text" id="employeeName" placeholder="Employee Name" required>
+                <select id="roleSelect" required>
+                    <option value="">Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Guest">Guest</option>
+                </select>
+                <button type="submit">Assign Role</button>
+            </form>
+        </div>
+
+        <!-- Assigned Roles List -->
+        <div class="role-list">
+            <h4>Assigned Employee Roles</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Assigned Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="rolesList">
+                    <!-- Assigned roles will be listed here -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Admin</td>
+                        <td><button class="btn-remove" onclick="removeRole(1)">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>Manager</td>
+                        <td><button class="btn-remove" onclick="removeRole(2)">Remove</button></td>
+                    </tr>
+                    <!-- More roles will be listed dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Handle the form submission for assigning roles
+        document.getElementById('assignRoleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get role assignment data from the form
+            const employeeName = document.getElementById('employeeName').value;
+            const role = document.getElementById('roleSelect').value;
+
+            if (employeeName && role) {
+                // Create a new row for the assigned role
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${employeeName}</td>
+                    <td>${role}</td>
+                    <td><button class="btn-remove" onclick="removeRole(${Date.now()})">Remove</button></td>
+                `;
+                document.getElementById('rolesList').appendChild(newRow);
+
+                // Clear the form fields
+                document.getElementById('assignRoleForm').reset();
+            }
+        });
+
+        // Remove assigned role
+        function removeRole(id) {
+            const row = document.querySelector(`#rolesList tr:nth-child(${id})`);
+            row.remove();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 40px;
+    }
+    .register-form {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .password-container {
+      position: relative;
+    }
+    .password-container input {
+      padding-right: 40px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      pointer-events: all;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-form">
+    <h2>Register</h2>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+      <label for="firstName">First Name:</label>
+      <input type="text" name="firstName" required>
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" name="lastName" required>
+
+      <label for="email">Email:</label>
+      <input type="email" name="email" required>
+
+      <label for="phone">Phone:</label>
+      <input type="text" name="phone" required>
+
+      <label for="role">Select Role:</label>
+      <select name="role" id="role" required onchange="checkRole()">
+        <option value="">--Choose Role--</option>
+        <option value="employee">Employee</option>
+        <option value="manager">Manager</option>
+        <option value="admin">Admin</option>
+        <option value="guest">Guest</option>
+      </select>
+
+      <!-- Employee, Manager, and Admin fields -->
+      <div id="position-section">
+        <label for="position">Position:</label>
+        <input type="text" name="position" id="position" />
+      </div>
+
+      <div id="department-section">
+        <label for="department">Department:</label>
+        <input type="text" name="department" id="department" />
+      </div>
+
+      <div id="salary-section">
+        <label for="salary">Salary:</label>
+        <input type="number" name="salary" id="salary" min="0" />
+      </div>
+
+      <!-- Date of Joining field -->
+      <label for="dateOfJoining">Date of Joining:</label>
+      <input type="date" name="dateOfJoining" required>
+
+      <!-- Password field -->
+      <div id="password-section">
+        <label for="password">Password:</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Password" />
+          <button type="button" class="toggle-password" tabindex="-1" onclick="togglePassword()">👁️</button>
+        </div>
+      </div>
+
+      <!-- CV Upload -->
+      <div id="cv-section">
+        <label for="cv">Upload CV:</label>
+        <input type="file" name="cv" />
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+
+    function checkRole() {
+      const role = document.getElementById('role').value;
+      const passwordSection = document.getElementById('password-section');
+      const cvSection = document.getElementById('cv-section');
+      const salarySection = document.getElementById('salary-section');
+      const positionSection = document.getElementById('position-section');
+      const departmentSection = document.getElementById('department-section');
+      const passwordInput = document.getElementById('password');
+
+      // Hide or show sections based on role
+      if (role === 'guest') {
+        passwordSection.style.display = 'none';
+        cvSection.style.display = 'none';
+        salarySection.style.display = 'none';
+        positionSection.style.display = 'none';
+        departmentSection.style.display = 'none';
+        passwordInput.required = false;
+      } else {
+        passwordSection.style.display = 'block';
+        cvSection.style.display = 'block';
+        salarySection.style.display = 'block';
+        positionSection.style.display = 'block';
+        departmentSection.style.display = 'block';
+        passwordInput.required = true;
+      }
+    }
+  </script>
+</body>
+</html>

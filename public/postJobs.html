@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Jobs - HR Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #34495e;
+            position: fixed;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 20px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .job-post-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .job-post-form input, .job-post-form select, .job-post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .job-post-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .job-post-form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<Body background="@2.jpg">
+    <div class="navbar">
+    <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+
+        <h2>Post New Job Opening</h2>
+    </div>
+     <div class="main">
+        <h3>Post New Job Position</h3>
+
+        <!-- Job Post Form -->
+        <div class="job-post-form">
+            <h4>Job Details</h4>
+            <form id="postJobForm">
+                <input type="text" id="jobTitle" placeholder="Job Title" required>
+                <select id="jobDepartment" required>
+                    <option value="">Select Department</option>
+                    <option value="HR">Human Resources</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finance">Finance</option>
+                </select>
+                <textarea id="jobDescription" placeholder="Job Description" rows="5" required></textarea>
+                <textarea id="jobRequirements" placeholder="Job Requirements" rows="5" required></textarea>
+                <input type="text" id="jobLocation" placeholder="Job Location" required>
+                <input type="number" id="salary" placeholder="Salary" required>
+                <button type="submit">Post Job</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Handle the form submission for posting job
+        document.getElementById('postJobForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get job details from the form
+            const jobTitle = document.getElementById('jobTitle').value;
+            const jobDepartment = document.getElementById('jobDepartment').value;
+            const jobDescription = document.getElementById('jobDescription').value;
+            const jobRequirements = document.getElementById('jobRequirements').value;
+            const jobLocation = document.getElementById('jobLocation').value;
+            const salary = document.getElementById('salary').value;
+
+            // Check if all fields are filled
+            if (jobTitle && jobDepartment && jobDescription && jobRequirements && jobLocation && salary) {
+                // Here you would usually send the data to the server to save the job posting
+                alert("Job posted successfully!");
+
+                // Clear the form fields
+                document.getElementById('postJobForm').reset();
+            } else {
+                alert("Please fill in all the fields!");
+            }
+        });
+    </script>
+</body>
+</html>

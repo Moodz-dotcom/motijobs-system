@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .login-btn:hover {
+            background-color: #45a049;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Employee Login</h2>
+        
+        <!-- Employee Login Form -->
+        <form id="login-form" onsubmit="return loginEmployee(event)">
+            <label for="employee-email">Email:</label>
+            <input type="email" id="employee-email" placeholder="Enter your email" required>
+
+            <label for="employee-password">Password:</label>
+            <input type="password" id="employee-password" placeholder="Enter your password" required>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <a href="#" class="forgot-password">Forgot Password?</a>
+    </div>
+
+    <script>
+        // Simulate a basic login function
+        function loginEmployee(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const email = document.getElementById('employee-email').value;
+            const password = document.getElementById('employee-password').value;
+
+            // Simple validation (can be replaced with backend validation)
+            if (email === "employee@example.com" && password === "password123") {
+                // Redirect to employee dashboard on successful login
+                window.location.href = "!Employeedashboard.html"; // Redirect to the employee dashboard page
+            } else {
+                alert("Invalid credentials, please try again.");
+            }
+        }
+    </script>
+
+</body>
+</html>

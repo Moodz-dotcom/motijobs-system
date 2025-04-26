@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance - Employee Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .attendance-table th, .attendance-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .attendance-table th {
+            background-color: #f2f2f2;
+        }
+        .mark-attendance {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .mark-attendance button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .mark-attendance button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Attendance - Employee Dashboard</h2>
+
+        <!-- Attendance Table Section -->
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Clock-In Time</th>
+                    <th>Clock-Out Time</th>
+                    <th>Total Hours Worked</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- This will be dynamically populated with the employee's attendance data -->
+                <tr>
+                    <td>2025-03-21</td>
+                    <td>08:30 AM</td>
+                    <td>05:00 PM</td>
+                    <td>8 hours</td>
+                </tr>
+                <tr>
+                    <td>2025-03-20</td>
+                    <td>09:00 AM</td>
+                    <td>05:00 PM</td>
+                    <td>8 hours</td>
+                </tr>
+                <!-- More rows can be added dynamically based on the employee's attendance records -->
+            </tbody>
+        </table>
+
+        <!-- Mark Attendance Button (if applicable) -->
+        <div class="mark-attendance">
+            <button onclick="markAttendance()">Mark Attendance</button>
+        </div>
+    </div>
+
+    <script>
+        function markAttendance() {
+            alert("Attendance marked for today!"); // Placeholder for actual attendance marking functionality
+            // In a real system, you would call an API to record the employee's clock-in time
+        }
+    </script>
+
+</body>
+</html>

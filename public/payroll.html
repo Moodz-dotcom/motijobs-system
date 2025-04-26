@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Payroll - HR Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #34495e;
+            position: fixed;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin: 20px 0;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .payroll-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .payroll-table th, .payroll-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .payroll-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .payroll-table td {
+            background-color: #f4f4f4;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            opacity: 0.8;
+        }
+
+        .add-salary-btn {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .add-salary-btn:hover {
+            opacity: 0.8;
+        }
+
+        .add-salary-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .add-salary-form input, .add-salary-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-salary-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .add-salary-form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<Body background="@1.jpg">
+    <div class="navbar">
+    <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+
+        <h2>Manage Payroll</h2>
+    </div>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="newMan.html">🏠 Dashboard</a></li>
+            <li><a href="manager-job-applications.html">📄 View Job Applications</a></li>
+            <li><a href="EmpRec.html">👥 Employee Records</a></li>
+            <li><a href="payroll.html">💰 Manage Payroll</a></li>
+            <li><a href="Preview.html">📊 Performance Reviews</a></li>
+            <li><a href="HUMAN R.html">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h3>Employee Payroll</h3>
+
+        <!-- Button to open Add Salary form -->
+        <button class="add-salary-btn" onclick="toggleSalaryForm()">➕ Add Salary</button>
+
+        <!-- Add Salary Form -->
+        <div class="add-salary-form" id="salaryForm" style="display: none;">
+            <h4>Assign Salary to Employee</h4>
+            <form id="addSalaryForm">
+                <input type="text" id="employeeName" placeholder="Employee Name" required>
+                <input type="number" id="salaryAmount" placeholder="Salary Amount" required>
+                <input type="text" id="salaryMonth" placeholder="Salary Month (e.g., January)" required>
+                <button type="submit">Add Salary</button>
+            </form>
+        </div>
+
+        <!-- Payroll Table -->
+        <table class="payroll-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Salary Amount</th>
+                    <th>Salary Month</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="payrollList">
+                <!-- Payroll data will be listed here -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>$5,000</td>
+                    <td>January</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>$4,500</td>
+                    <td>January</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </td>
+                </tr>
+                <!-- More payroll records can be listed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Toggle the visibility of the Add Salary form
+        function toggleSalaryForm() {
+            const form = document.getElementById('salaryForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Handle form submission for adding a new salary record
+        document.getElementById('addSalaryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get salary data from form
+            const name = document.getElementById('employeeName').value;
+            const salary = document.getElementById('salaryAmount').value;
+            const month = document.getElementById('salaryMonth').value;
+
+            // Add new salary record to the table (you would typically add this to a database)
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>$${salary}</td>
+                <td>${month}</td>
+                <td>
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-delete">Delete</button>
+                </td>
+            `;
+            document.getElementById('payrollList').appendChild(newRow);
+
+            // Clear form fields
+            document.getElementById('addSalaryForm').reset();
+
+            // Hide the form
+            toggleSalaryForm();
+        });
+    </script>
+</body>
+</html>

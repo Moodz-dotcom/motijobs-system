@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .login-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-button:hover {
+            background-color: #555;
+        }
+        .forgot-password {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .forgot-password a {
+            color: #333;
+            text-decoration: none;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Manager Login</h1>
+    </div>
+
+    <div class="login-container">
+        <h2>Login to HR System</h2>
+        <form id="loginForm" onsubmit="return validateLogin()">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        <div class="forgot-password">
+            <p><a href="#">Forgot password?</a></p>
+        </div>
+        <div class="error-message" id="errorMessage">
+            <p>Invalid username or password. Please try again.</p>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded credentials for testing purposes
+        const correctUsername = "manager";
+        const correctPassword = "password123";
+
+        function validateLogin() {
+            // Get user input
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Check if username and password match the correct ones
+            if (username === correctUsername && password === correctPassword) {
+                // If login is successful, redirect to manager dashboard
+                window.location.href = "newMan.html"; // Replace with actual dashboard URL
+                return false; // Prevent form submission
+            } else {
+                // If login is unsuccessful, show error message
+                document.getElementById("errorMessage").style.display = "block";
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+
+</body>
+</html>

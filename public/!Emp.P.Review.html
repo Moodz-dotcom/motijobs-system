@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Reviews - Employee Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .performance-reviews {
+            margin-bottom: 20px;
+        }
+        .performance-reviews table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .performance-reviews th, .performance-reviews td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .performance-reviews th {
+            background-color: #f2f2f2;
+        }
+        .performance-reviews td {
+            text-align: center;
+        }
+        .review-feedback {
+            font-size: 14px;
+            color: #555;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        .goals {
+            font-size: 14px;
+            color: #333;
+            padding: 10px;
+            background-color: #e6f7e6;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Performance Reviews - Employee Dashboard</h2>
+
+        <!-- Performance Reviews Section -->
+        <div class="performance-reviews">
+            <h3>Performance Reviews</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Review Date</th>
+                        <th>Performance Rating</th>
+                        <th>Feedback</th>
+                        <th>Goals for Next Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Performance review records will be dynamically inserted here -->
+                    <tr>
+                        <td>2025-03-15</td>
+                        <td>Excellent</td>
+                        <td>
+                            <div class="review-feedback">
+                                "Outstanding performance this quarter. Keep up the great work!"
+                            </div>
+                        </td>
+                        <td>
+                            <div class="goals">
+                                "Continue to improve communication with clients and work on leadership skills."
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2024-12-10</td>
+                        <td>Good</td>
+                        <td>
+                            <div class="review-feedback">
+                                "Good work overall, but there were a few missed deadlines. Focus on time management."
+                            </div>
+                        </td>
+                        <td>
+                            <div class="goals">
+                                "Improve time management and meet all deadlines."
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- More rows can be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MotiJobs HR Management System</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      z-index: 999;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background-color: #444;
+    }
+    .navbar a:hover {
+      background-color: #777;
+    }
+    .section {
+      min-height: 100vh;
+      padding: 80px 20px 40px;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    form, input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    input, select {
+      width: 250px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    ul#jobList {
+      margin-top: 20px;
+      list-style: none;
+      padding: 0;
+    }
+    ul#jobList li {
+      background: rgba(0, 0, 0, 0.5);
+      margin: 10px auto;
+      padding: 10px;
+      width: 60%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 60%;
+      max-width: 600px;
+      position: relative;
+      color: #333;
+    }
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: red;
+    }
+    .dashboard {
+      display: none;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <img src="@H1.jpg" alt="Logo" width="40" height="40" style="border-radius:50%">
+    <span style="font-weight: bold;">MotiJobs</span>
+    <a href="#home">Home</a>
+    <a href="#login">Login</a>
+    <a href="#search-jobs">Search Jobs</a>
+    <a href="#about-us">About Us</a>
+    <a href="#contact-us">Contact Us</a>
+  </div>
+
+  <!-- Home -->
+  <div id="home" class="section" style="background-image: url('#me.png');">
+    <h2>Welcome to MotiJobs HR Management System</h2>
+    <p>Your central hub for employee and job management.</p>
+    <img src="/mnt/data/A_digital_photograph_on_the_homepage_of_the_MotiJo.png" alt="Working" style="max-width: 100%; height: auto; border-radius: 10px;">
+  </div>
+
+  <!-- Login -->
+  <div id="login" class="section" style="background-image: url('@2.jpg');">
+    <h2>Login Portal</h2>
+    <form onsubmit="handleLogin(event)">
+      <select id="roleSelect" required>
+        <option value="">Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="manager">HR Manager</option>
+        <option value="employee">Employee</option>
+        <option value="guest">Guest</option>
+      </select><br>
+            <button type="submit">Login</button>
+    </form>
+
+    <!-- Dashboards -->
+    <div id="adminPanel" class="dashboard">
+      <h3>Admin Dashboard</h3>
+      <p>Post jobs and manage roles here.</p>
+      <!-- Job posting form or features -->
+    </div>
+
+    <div id="managerPanel" class="dashboard">
+      <h3>HR Manager Dashboard</h3>
+      <p>Manage job applications and employee records.</p>
+    </div>
+
+    <div id="employeePanel" class="dashboard">
+      <h3>Employee Dashboard</h3>
+      <p>View tasks, request leave, and more.</p>
+    </div>
+
+    <div id="guestPanel" class="dashboard">
+      <h3>Guest Dashboard</h3>
+      <p>You are logged in as a guest. Feel free to browse jobs below.</p>
+    </div>
+  </div>
+
+  <!-- Job Search -->
+  <div id="search-jobs" class="section" style="background-image: url('@3.jpg');">
+    <h2>Search Jobs</h2>
+    <input type="text" id="searchBox" placeholder="Search for jobs..." onkeyup="filterJobs()">
+    <ul id="jobList">
+      <li onclick="showDetails('software')">Software Engineer</li>
+      <li onclick="showDetails('hr')">HR Assistant</li>
+      <li onclick="showDetails('marketing')">Marketing Intern</li>
+      <li onclick="showDetails('finance')">Finance Analyst</li>
+      <li onclick="showDetails('support')">Customer Support</li>
+      <li onclick="showDetails('designer')">UI/UX Designer</li>
+      <li onclick="showDetails('network')">Network Admin</li>
+      <li onclick="showDetails('analyst')">Data Analyst</li>
+    </ul>
+  </div>
+
+  <!-- About Us -->
+  <div id="about-us" class="section" style="background-image: url('@3.jpg');">
+    <h2>About Us</h2>
+    <p>At <strong>MotiJobs</strong>, we believe managing human resources should be seamless, efficient, and empowering.</p>
+  </div>
+
+  <!-- Contact Us -->
+  <div id="contact-us" class="section" style="background-image: url('@2.jpg');">
+    <h2>Contact Us</h2>
+    <p><strong>Email:</strong> support@motijobs.com</p>
+    <p><strong>Phone:</strong> +256 708-904-469</p>
+    <a href="https://wa.me/1234567890?text=Hello,%20I%20need%20assistance%20with%20the%20HR%20system."
+       target="_blank"
+       style="background: #25D366; padding: 10px 20px; border-radius: 5px; color: white; text-decoration: none;">
+       Contact via WhatsApp
+    </a>
+  </div>
+
+  <!-- Modal -->
+  <div id="jobModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+<script>
+  function filterJobs() {
+    const input = document.getElementById('searchBox').value.toLowerCase();
+    const jobs = document.getElementById('jobList').getElementsByTagName('li');
+    for (let job of jobs) {
+      job.style.display = job.textContent.toLowerCase().includes(input) ? "" : "none";
+    }
+  }
+
+  function showDetails(jobId) {
+    const titles = {
+      software: "Software Engineer",
+      hr: "HR Assistant",
+      marketing: "Marketing Intern",
+      finance: "Finance Analyst",
+      support: "Customer Support",
+      designer: "UI/UX Designer",
+      network: "Network Administrator",
+      analyst: "Data Analyst"
+    };
+    const descriptions = {
+      software: "Design and develop applications. Requires knowledge of Java, Python, or JS.",
+      hr: "Assist in recruitment and maintain records.",
+      marketing: "Support campaigns and social media content.",
+      finance: "Analyze financial data and build reports.",
+      support: "Provide customer support via email/chat.",
+      designer: "Design UI/UX using Figma or Adobe XD.",
+      network: "Maintain IT network infrastructure.",
+      analyst: "Analyze data using SQL/Python/Excel."
+    };
+
+    document.getElementById('modalTitle').innerText = titles[jobId];
+    document.getElementById('modalDesc').innerText = descriptions[jobId];
+    document.getElementById('jobModal').style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('jobModal').style.display = "none";
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    const role = document.getElementById('roleSelect').value;
+
+    // Hide all dashboards
+    ['adminPanel', 'managerPanel', 'employeePanel', 'guestPanel'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+
+    // Show relevant dashboard
+    if (role === 'admin') {
+      document.getElementById('adminPanel').style.display = 'block';
+    } else if (role === 'manager') {
+      document.getElementById('managerPanel').style.display = 'block';
+    } else if (role === 'employee') {
+      document.getElementById('employeePanel').style.display = 'block';
+    } else {
+      document.getElementById('guestPanel').style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
