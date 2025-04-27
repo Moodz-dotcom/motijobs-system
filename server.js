@@ -1,136 +1,250 @@
-// Import necessary modules
+// Import required modules
 const express = require('express');
-const session = require('express-session');
-const connectRedis = require('connect-redis');
-const redis = require('redis');
-const Sequelize = require('sequelize');
-const path = require('path');
 const multer = require('multer');
+const path = require('path');
+const session = require('express-session');
 const dotenv = require('dotenv');
+const redis = require('redis');
+const connectRedis = require('connect-redis');
+const sequelize = require('./sequelize');  // Ensure this points to the correct file where Sequelize is set up
 
-// Initialize environment variables
-dotenv.config();
+// Models
+const Employee = require('./models/employee');
+const Manager = require('./models/Manager');
+const Admin = require('./models/Admin');
+const Guest = require('./models/Guest');
+const Attendance = require('./models/attendance');
 
-// Create the Redis client
-const RedisClient = redis.createClient();
+dotenv.config(); // Load environment variables from .env file
 
-// Create the RedisStore using connect-redis and session
-const RedisStore = connectRedis(session); // This should work with the newer connect-redis version
-
-// Initialize Express app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Set up body-parser middleware for handling form data
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Redis Setup
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST || 'localhost', 
+  port: process.env.REDIS_PORT || 6379 
+});
 
-// Serve static files (HTML, CSS, etc.)
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Sequelize setup for SQLite
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'database.sqlite',
-});
+// View Engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Test Sequelize connection
-sequelize.authenticate()
-  .then(() => console.log('Database connected!'))
-  .catch((err) => console.error('Unable to connect to the database:', err));
+// Session Setup with Redis
+app.use(session({
+  store: new RedisStore({ client: redisClient }),
+  secret: process.env.SESSION_SECRET || 'yourSecretKey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // Secure cookie in production
+    maxAge: 1000 * 60 * 60 * 2 // 2 hours
+  }
+}));
 
-// Session middleware configuration using Redis
-app.use(
-  session({
-    store: new RedisStore({ client: RedisClient }),
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: false, // set true if using https
-      maxAge: 3600000, // 1 hour
-    },
-  })
-);
-
-// Multer configuration for file uploads
+// Multer setup for file uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
+  destination: (req, file, cb) => cb(null, 'public/uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 });
+const upload = multer({ storage });
 
-const upload = multer({ storage: storage });
+// Test Database Connection
+sequelize.authenticate()
+  .then(() => console.log('Database connected successfully.'))
+  .catch(err => console.error('Database connection failed:', err));
 
-// Define models (e.g., Employee)
-const Employee = sequelize.define('Employee', {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+// Sync Database Models
+sequelize.sync()
+  .then(() => console.log('Models synchronized.'))
+  .catch(err => console.error('Model synchronization failed:', err));
 
-// Sync models with the database
-sequelize.sync();
+// -------- ROUTES --------
 
-// Define routes
+// Home Page
 app.get('/', (req, res) => {
-  res.send('Welcome to the HR System');
+  console.log("Root route hit, serving roll.html");
+  res.sendFile(path.join(__dirname, 'public', 'roll.html'));
 });
 
-// Registration route (example)
+
+// Registration Page
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register.html')); // Static HTML page
+});
+
+// Registration Handler
 app.post('/register', upload.single('cv'), async (req, res) => {
-  const { name, email, password } = req.body;
   try {
-    const employee = await Employee.create({ name, email, password });
-    res.send('Employee registered successfully!');
-  } catch (error) {
-    res.status(500).send('Error registering employee');
+    const { firstName, lastName, email, phone, position, department, salary, dateOfJoining, role, password } = req.body;
+    const filePath = req.file ? '/uploads/' + req.file.filename : null;
+
+    switch (role) {
+      case 'guest':
+        await Guest.create({ firstName, lastName, email, phone });
+        break;
+      case 'employee':
+        await Employee.create({
+          firstName, lastName, email, phone,
+          position, department, salary, dateOfJoining,
+          password, cv: filePath
+        });
+        break;
+      case 'manager':
+      case 'admin':
+        const model = role === 'manager' ? Manager : Admin;
+        await model.create({
+          firstName, lastName, email, phone,
+          department, profilePic: filePath, password
+        });
+        break;
+      default:
+        return res.status(400).send('Invalid role');
+    }
+
+    res.redirect('/login');
+  } catch (err) {
+    console.error('Registration error:', err);
+    res.status(500).send('Registration failed');
   }
 });
 
-// Sample route for handling file uploads
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
-  res.send('File uploaded successfully.');
-});
-
-// Sample login route for testing session
+// Login Page (EJS Template)
 app.get('/login', (req, res) => {
-  req.session.user = { username: 'testuser' };
-  res.send('Logged in successfully');
+  res.sendFile(path.join(__dirname, 'path_to_your_roll.html'));
 });
 
-// Sample route to check session
-app.get('/check-session', (req, res) => {
-  if (req.session.user) {
-    res.send(`Hello, ${req.session.user.username}`);
-  } else {
-    res.send('No session found');
+// Login Handler
+app.post('/login', async (req, res) => {
+  const { email, role, password } = req.body;
+
+  try {
+    let user = null;
+
+    switch (role) {
+      case 'guest':
+        user = await Guest.findOne({ where: { email } });
+        break;
+      case 'employee':
+        user = await Employee.findOne({ where: { email, password } });
+        break;
+      case 'manager':
+        user = await Manager.findOne({ where: { email, password } });
+        break;
+      case 'admin':
+        user = await Admin.findOne({ where: { email, password } });
+        break;
+      default:
+        return res.send('Invalid role');
+    }
+
+    if (!user) return res.send('Invalid email or password');
+
+    req.session.user = {
+      role: role,
+      email: user.email,
+      name: `${user.firstName} ${user.lastName}`,
+      id: user.id
+    };
+
+    switch (role) {
+      case 'employee': return res.redirect('/employee-dashboard');
+      case 'manager': return res.redirect('/manager-dashboard');
+      case 'admin': return res.redirect('/admin-dashboard');
+      case 'guest': return res.redirect('/guest-dashboard');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).send('Server error during login');
   }
 });
 
-// Error handling middleware
-app.use((req, res, next) => {
-  res.status(404).send('Page Not Found');
+// Logout Handler
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Session destroy error:', err);
+      return res.status(500).send('Logout failed');
+    }
+    res.clearCookie('connect.sid');
+    res.redirect('/');
+  });
+});
+
+// Dashboards (HTML and EJS templates)
+// Employee Dashboard (EJS Template)
+app.get('/employee-dashboard', async (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'employee') return res.redirect('/login');
+  try {
+    const employee = await Employee.findOne({ where: { email: req.session.user.email } });
+    if (!employee) return res.status(404).send('Employee not found');
+    res.render('employee-dashboard', { employee }); // EJS template for employee dashboard
+  } catch (err) {
+    console.error('Employee dashboard error:', err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Manager Dashboard (Static HTML)
+app.get('/manager-dashboard', (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'manager') return res.redirect('/login');
+  res.sendFile(path.join(__dirname, 'public', 'newMan.html')); // Static HTML page for manager dashboard
+});
+
+// Admin Dashboard (Static HTML)
+app.get('/admin-dashboard', (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'admin') return res.redirect('/login');
+  res.sendFile(path.join(__dirname, 'public', 'Home.html')); // Static HTML page for admin dashboard
+});
+
+// Guest Dashboard (Static HTML)
+app.get('/guest-dashboard', (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'guest') return res.redirect('/login');
+  res.sendFile(path.join(__dirname, 'public', 'Gdashboard.html')); // Static HTML page for guest dashboard
+});
+
+// Edit Profile (EJS Template for Employee)
+app.get('/edit-profile', async (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'employee') return res.redirect('/login');
+  try {
+    const employee = await Employee.findOne({ where: { email: req.session.user.email } });
+    if (!employee) return res.status(404).send('Employee not found');
+    res.render('edit-profile', { employee }); // EJS template for editing profile
+  } catch (err) {
+    console.error('Edit profile error:', err);
+    res.status(500).send('Server Error');
+  }
+});
+
+app.post('/edit-profile', upload.single('profilePic'), async (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'employee') return res.redirect('/login');
+  try {
+    const { firstName, lastName, email, phone, position, department, salary } = req.body;
+    const profilePic = req.file ? '/uploads/' + req.file.filename : null;
+
+    const [updated] = await Employee.update({
+      firstName, lastName, email, phone, position, department, salary, profilePic
+    }, {
+      where: { email: req.session.user.email }
+    });
+
+    if (updated === 0) return res.status(404).send('Employee not found or not updated');
+
+    res.redirect('/employee-dashboard');
+  } catch (err) {
+    console.error('Update profile error:', err);
+    res.status(500).send('Error updating profile');
+  }
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
 });
+;
