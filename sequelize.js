@@ -1,27 +1,11 @@
-// sequelize.js
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
+const path = require('path');
 
-let sequelize;
-
-if (process.env.NODE_ENV === 'production') {
-  // Running on Render (Production) -> use PostgreSQL
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
-  });
-} else {
-  // Running locally -> use SQLite
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite'
-  });
-}
+// SQLite Database connection
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: path.join(__dirname, 'database.sqlite'), // Define the SQLite file location
+  logging: false, // Optional: Disable SQL query logging
+});
 
 module.exports = sequelize;
