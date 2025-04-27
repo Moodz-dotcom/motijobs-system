@@ -1,24 +1,22 @@
-// models/attendance.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');  // Correct relative path
+const sequelize = require('../sequelize');
 
 const Attendance = sequelize.define('Attendance', {
-    employeeId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    clockInTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    clockOutTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    totalHoursWorked: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    }
-}, {});
+  employeeId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  checkIn: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  checkOut: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+}, {
+  // options for model
+  timestamps: false,  // if you don't want to automatically track createdAt/updatedAt
+});
 
 module.exports = Attendance;
