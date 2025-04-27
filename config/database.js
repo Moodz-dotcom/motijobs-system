@@ -1,12 +1,13 @@
-// config/database.js
-const { Sequelize } = require('sequelize');
-
-// Initialize Sequelize with your database settings (example with SQLite)
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './database.sqlite',  // Path to the SQLite database file
-    logging: false  // Set to true if you want to see SQL queries in the console
-});
-
-// Export the Sequelize instance for use in other files
-module.exports = sequelize;
+module.exports = {
+  development: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
+  },
+  production: {
+    use_env_variable: 'DATABASE_URL', // Use the DATABASE_URL from .env for production
+    dialect: 'postgres',
+  },
+};

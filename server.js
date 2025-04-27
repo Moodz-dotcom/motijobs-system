@@ -6,9 +6,9 @@ const sequelize = require('./sequelize');
 
 // Models
 const Employee = require('./models/employee');
-const Manager = require('./models/manager');
+const Manager = require('./models/Manager');
 const Admin = require('./models/admin');
-const Guest = require('./models/guest');
+const Guest = require('./models/Guest');
 const Attendance = require('./models/attendance');
 
 const app = express();
