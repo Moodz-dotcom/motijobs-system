@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR System Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .login-container {
+            width: 25%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+        }
+
+        .login-options a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .login-options a:hover {
+            background-color: #0056b3;
+        }
+
+        .slideshow-container {
+            flex-grow: 1;
+            max-width: 600px;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-left: 20px;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            transition: opacity 1s ease-in-out;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        @keyframes fadeEffect {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<Body background="@1.jpg">
+<div class="navbar">
+        <img alt="MotiJobs Logo" class="h-8 w-8" height="50" src="@H1.jpg" width="50"/>
+        <span class="ml-2 text-xl font-bold">MotiJobs</span>
+        <h1>Welcome</h1>
+    </div>
+
+    <div class="container">
+        <!-- Login Section -->
+        <div class="login-container">
+            <h2>LOGIN</h2>
+            <div class="login-options">
+                <a href="login.html">Admin Login</a>
+                <a href="Mlogin.html">Manager Login</a>
+                <a href="!Emplogin.html">Employee Login</a>
+                <a href="Gdashboard.html">Guest Access</a>
+            </div>
+        </div>
+
+        <!-- Slideshow Section -->
+        <div class="slideshow-container">
+            <img class="slide fade" src="@H1.jpg" alt="HR Team">
+            <img class="slide fade" src="@H2.jpg" alt="Office Environment">
+            <img class="slide fade" src="@H3.jpg" alt="Employee Meeting">
+            <img class="slide fade" src="use.jpg" alt="HR Team">
+            <img class="slide fade" src="HR@.jpg" alt="HR Team">
+        </div>
+    </div>
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }    
+            slides[slideIndex - 1].style.display = "block";  
+            setTimeout(showSlides, 10000); // Change image every 10 seconds
+        }
+
+        showSlides();
+    </script>
+</body>
+</html>

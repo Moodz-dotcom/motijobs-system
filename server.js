@@ -22,9 +22,21 @@ const PORT = process.env.PORT || 3000;
 
 // Redis Setup
 const RedisStore = connectRedis(session);
+
+// Ensure Redis client is connected before using it
 const redisClient = redis.createClient({
-  host: process.env.REDIS_HOST || 'localhost', 
-  port: process.env.REDIS_PORT || 6379 
+  host: process.env.REDIS_HOST || 'localhost',
+  port: process.env.REDIS_PORT || 6379
+});
+
+// Redis client connection error handling
+redisClient.on('error', (err) => {
+  console.error('Redis error:', err);
+  process.exit(1);  // Exit if Redis connection fails
+});
+
+redisClient.on('connect', () => {
+  console.log('Connected to Redis');
 });
 
 // Middleware
@@ -58,12 +70,18 @@ const upload = multer({ storage });
 // Test Database Connection
 sequelize.authenticate()
   .then(() => console.log('Database connected successfully.'))
-  .catch(err => console.error('Database connection failed:', err));
+  .catch(err => {
+    console.error('Database connection failed:', err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
 // Sync Database Models
 sequelize.sync()
   .then(() => console.log('Models synchronized.'))
-  .catch(err => console.error('Model synchronization failed:', err));
+  .catch(err => {
+    console.error('Model synchronization failed:', err);
+    process.exit(1); // Exit if model sync fails
+  });
 
 // -------- ROUTES --------
 
@@ -73,10 +91,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'roll.html'));
 });
 
-
 // Registration Page
 app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html')); // Static HTML page
+  res.sendFile(path.join(__dirname, 'public', 'Register.html')); // Static HTML page
 });
 
 // Registration Handler
@@ -117,7 +134,7 @@ app.post('/register', upload.single('cv'), async (req, res) => {
 
 // Login Page (EJS Template)
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'path_to_your_roll.html'));
+  res.render('login'); // EJS template for login
 });
 
 // Login Handler
@@ -154,10 +171,10 @@ app.post('/login', async (req, res) => {
     };
 
     switch (role) {
-      case 'employee': return res.redirect('/employee-dashboard');
-      case 'manager': return res.redirect('/manager-dashboard');
-      case 'admin': return res.redirect('/admin-dashboard');
-      case 'guest': return res.redirect('/guest-dashboard');
+      case 'employee': return res.redirect('/@indexhtml');
+      case 'manager': return res.redirect('/newMan.html');
+      case 'admin': return res.redirect('/Home.html');
+      case 'guest': return res.redirect('/Gdashboard.html');
     }
   } catch (err) {
     console.error('Login error:', err);
@@ -247,4 +264,4 @@ app.post('/edit-profile', upload.single('profilePic'), async (req, res) => {
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
 });
-;
+``
